@@ -4,7 +4,7 @@ import debug from 'debug';
 import { ConfigEnv, loadConfigFromFile, mergeConfig, UserConfig } from 'vite';
 
 import { VitePluginConfig } from './Config';
-import { externalBuiltins } from './util/plugins';
+import { externalBuiltins, hotRestart } from './util/plugins';
 
 const d = debug('electron-forge:plugin:vite:viteconfig');
 
@@ -68,7 +68,7 @@ export default class ViteConfigGenerator {
     const plugins = [externalBuiltins()];
     const configs = this.pluginConfig.build
       .filter(({ entry, config }) => entry || config)
-      .map<Promise<UserConfig>>(async ({ entry, config }) => {
+      .map<Promise<UserConfig>>(async ({ entry, config, restart }) => {
         const defaultConfig: UserConfig = {
           // Ensure that each build config loads the .env file correctly.
           mode: this.mode,
@@ -89,7 +89,7 @@ export default class ViteConfigGenerator {
           },
           clearScreen: false,
           define,
-          plugins,
+          plugins: [...plugins, hotRestart(restart)],
         };
         if (config) {
           const loadResult = await this.resolveConfig(config);

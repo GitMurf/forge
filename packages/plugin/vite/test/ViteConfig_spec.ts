@@ -42,7 +42,7 @@ describe('ViteConfigGenerator', () => {
       clearScreen: false,
       define: {},
       // shims
-      plugins: [buildConfig.plugins?.[0]],
+      plugins: buildConfig.plugins,
     } as UserConfig);
   });
 

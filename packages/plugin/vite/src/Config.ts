@@ -9,6 +9,11 @@ export interface VitePluginBuildConfig {
    * Vite config file path.
    */
   config?: string;
+  /**
+   * By default, when any entry in `build` is rebuilt it will restart the Electron App.
+   * If you want to customize this behavior, you can pass a function and control it with the `args.restart` provided by the function.
+   */
+  restart?: false | ((args: { restart: () => void }) => void | Promise<void>);
 }
 
 export interface VitePluginRendererConfig {
