@@ -24,7 +24,8 @@
     "test:slow": "xvfb-maybe cross-env NODE_ENV=test LINK_FORGE_DEPENDENCIES_ON_INIT=1 TS_NODE_PROJECT='./tsconfig.test.json' TEST_SLOW_ONLY=1 TS_NODE_FILES=1 mocha './tools/test-globber.ts'",
     "postinstall": "rimraf node_modules/.bin/*.ps1 && ts-node ./tools/gen-tsconfigs.ts && ts-node ./tools/gen-ts-glue.ts",
     "prepare": "husky install",
-    "preversion": "yarn build"
+    "preversion": "yarn build",
+    "gitmurf-clean-install": "yarn install && npm run clean && npm run prepare && npm run preversion && npm run build"
   },
   "dependencies": {
     "@aws-sdk/abort-controller": "^3.29.0",
